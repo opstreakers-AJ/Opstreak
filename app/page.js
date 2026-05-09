@@ -120,4 +120,231 @@ export default function App() {
   // ── ONBOARDING ──
   if (page === 'onboard') {
     const suggestedHabits = {
-      athlete: [{name:'Morning workout / run',icon:
+      athlete: [{name:'Morning workout / run',icon:'🏃'},{name:'Drink 3 litres of water',icon:'💧'},{name:'Eat clean — no junk',icon:'🥗'},{name:'Sleep 8 hours',icon:'😴'},{name:'Stretch & mobility',icon:'🧘'},{name:'Track training progress',icon:'📝'}],
+      entrepreneur: [{name:'Deep work on main project — 2hr',icon:'💻'},{name:'Read business / growth content',icon:'📖'},{name:'Track revenue & key metrics',icon:'📊'},{name:'One meaningful outreach',icon:'🤝'},{name:'No mindless scrolling',icon:'🚫'},{name:'Journal — wins & lessons',icon:'✍️'}],
+      artist: [{name:'Create for 1 focused hour',icon:'🎨'},{name:'Study great work in your field',icon:'📚'},{name:'Capture ideas — sketch or write',icon:'✏️'},{name:'Drink 3 litres of water',icon:'💧'},{name:'Walk — let the mind wander',icon:'🚶'},{name:'Share or document your work',icon:'📸'}],
+      warrior: [{name:'Strength training',icon:'💪'},{name:'Cardio — 30 min minimum',icon:'🏃'},{name:'Cold shower',icon:'🚿'},{name:'Eat clean',icon:'🥗'},{name:'Read — 30 pages',icon:'📖'},{name:'Reflect — what did I win today',icon:'🪞'}],
+      scholar: [{name:'Deep study — 2 focused hours',icon:'🧠'},{name:'Write to consolidate learning',icon:'✍️'},{name:'Read — books not feeds',icon:'📖'},{name:'Solve one hard problem',icon:'🔍'},{name:'No distractions after 9pm',icon:'🌙'},{name:'Review & revise yesterday',icon:'🔄'}],
+      healer: [{name:'Study — clinical or research',icon:'📚'},{name:'Drink 3 litres of water',icon:'💧'},{name:'Exercise — 30 min',icon:'🏃'},{name:'Sleep 7-8 hours',icon:'😴'},{name:'Mindfulness — 10 min',icon:'🧘'},{name:'Eat nutritiously',icon:'🥗'}],
+      creator: [{name:'Write 500+ words',icon:'✍️'},{name:'Read for 30 min',icon:'📖'},{name:'Capture 3 original ideas',icon:'💡'},{name:'Drink 3 litres of water',icon:'💧'},{name:'No social media before noon',icon:'🚫'},{name:'Publish or share something',icon:'📤'}],
+      leader: [{name:'1 meaningful conversation',icon:'🤝'},{name:'Read — leadership or strategy',icon:'📚'},{name:'Exercise',icon:'💪'},{name:'Write — thoughts or plans',icon:'✍️'},{name:'Review team or project health',icon:'📊'},{name:'No reactive decisions before 10am',icon:'🧘'}],
+    }
+
+    const habits = suggestedHabits[obIdentity] || suggestedHabits.athlete
+
+    return (
+      <>
+        <style>{CSS}</style>
+        <div className="page" style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',textAlign:'center',paddingTop:'3rem',paddingBottom:'3rem'}}>
+
+          <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:'2.2rem',fontWeight:700,color:O,marginBottom:'0.3rem'}}>OpStreak</div>
+          <div style={{fontSize:'0.82rem',color:'#999',marginBottom:'2.5rem'}}>Build your streak. Show up every day.</div>
+
+          {/* STEP 1 — Name */}
+          {obStep === 1 && (
+            <div style={{width:'100%',maxWidth:'400px'}}>
+              <div style={{fontSize:'0.68rem',fontWeight:600,letterSpacing:'0.12em',textTransform:'uppercase',color:O,marginBottom:'0.4rem'}}>Welcome</div>
+              <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:'2rem',fontWeight:700,color:'#1C1008',marginBottom:'0.4rem'}}>What shall we call you?</div>
+              <div style={{fontSize:'0.85rem',color:'#999',marginBottom:'1.5rem'}}>Your name or a power name — this is who shows up every day.</div>
+              <input className="inp" placeholder="e.g. Priya, Maverick, The Wolf..." value={obName} onChange={e=>setObName(e.target.value)} style={{textAlign:'center',fontSize:'1.1rem',fontWeight:600}} maxLength={25}/>
+              <button className="btn-p" onClick={()=>{ if(!obName.trim()){alert('Please enter your name');return} setObStep(2) }}>Continue →</button>
+              <div style={{display:'flex',justifyContent:'center',gap:'0.4rem',marginTop:'1.2rem'}}>
+                {[1,2,3,4].map(n=><div key={n} style={{width:n===1?'18px':'6px',height:'6px',borderRadius:'3px',background:n===1?O:'rgba(232,100,10,0.2)'}}></div>)}
+              </div>
+            </div>
+          )}
+
+          {/* STEP 2 — Identity */}
+          {obStep === 2 && (
+            <div style={{width:'100%',maxWidth:'420px'}}>
+              <div style={{fontSize:'0.68rem',fontWeight:600,letterSpacing:'0.12em',textTransform:'uppercase',color:O,marginBottom:'0.4rem'}}>Step 2 of 4</div>
+              <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:'2rem',fontWeight:700,color:'#1C1008',marginBottom:'0.4rem'}}>Who are you building?</div>
+              <div style={{fontSize:'0.85rem',color:'#999',marginBottom:'1.5rem'}}>Choose the identity you are committed to becoming. This is not who you are today — it is who you are working to be.</div>
+              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'0.6rem',marginBottom:'1rem',textAlign:'left'}}>
+                {Object.entries(IDENTITIES).map(([k,v])=>(
+                  <div key={k} className={`id-card${obIdentity===k?' on':''}`} onClick={()=>setObIdentity(k)}>
+                    <div style={{fontSize:'1.5rem',marginBottom:'0.3rem'}}>{v.icon}</div>
+                    <div style={{fontWeight:600,fontSize:'0.85rem',color:'#1C1008'}}>{v.label}</div>
+                    <div style={{fontSize:'0.72rem',color:'#999',marginTop:'0.15rem'}}>{v.desc}</div>
+                  </div>
+                ))}
+              </div>
+              <button className="btn-p" onClick={()=>setObStep(3)}>Continue →</button>
+              <div style={{display:'flex',justifyContent:'center',gap:'0.4rem',marginTop:'1.2rem'}}>
+                {[1,2,3,4].map(n=><div key={n} style={{width:n===2?'18px':'6px',height:'6px',borderRadius:'3px',background:n<=2?O:'rgba(232,100,10,0.2)'}}></div>)}
+              </div>
+            </div>
+          )}
+
+          {/* STEP 3 — Goal */}
+          {obStep === 3 && (
+            <div style={{width:'100%',maxWidth:'400px'}}>
+              <div style={{fontSize:'0.68rem',fontWeight:600,letterSpacing:'0.12em',textTransform:'uppercase',color:O,marginBottom:'0.4rem'}}>Step 3 of 4</div>
+              <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:'2rem',fontWeight:700,color:'#1C1008',marginBottom:'0.4rem'}}>Your 6-month commitment.</div>
+              <div style={{fontSize:'0.85rem',color:'#999',marginBottom:'1.5rem'}}>Not a wish. A decision. What will be true about you 6 months from now?</div>
+              <textarea className="inp" placeholder="In 6 months I will be..." value={obGoal} onChange={e=>setObGoal(e.target.value)} style={{minHeight:'90px',resize:'none'}}/>
+              <input className="inp" type="number" placeholder="What day are you on? (e.g. 125)" value={obDay} onChange={e=>setObDay(e.target.value)} style={{textAlign:'center'}}/>
+              <button className="btn-p" onClick={()=>{ setObStep(4) }}>See My Daily Habits →</button>
+              <div style={{display:'flex',justifyContent:'center',gap:'0.4rem',marginTop:'1.2rem'}}>
+                {[1,2,3,4].map(n=><div key={n} style={{width:n===3?'18px':'6px',height:'6px',borderRadius:'3px',background:n<=3?O:'rgba(232,100,10,0.2)'}}></div>)}
+              </div>
+            </div>
+          )}
+
+          {/* STEP 4 — Habits */}
+          {obStep === 4 && (
+            <div style={{width:'100%',maxWidth:'420px',textAlign:'left'}}>
+              <div style={{textAlign:'center',marginBottom:'1.5rem'}}>
+                <div style={{fontSize:'0.68rem',fontWeight:600,letterSpacing:'0.12em',textTransform:'uppercase',color:O,marginBottom:'0.4rem'}}>Step 4 of 4</div>
+                <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:'2rem',fontWeight:700,color:'#1C1008',marginBottom:'0.4rem'}}>Your daily non-negotiables.</div>
+                <div style={{fontSize:'0.85rem',color:'#999'}}>Suggested for a {IDENTITIES[obIdentity]?.label}. Select what you commit to — or add your own.</div>
+              </div>
+              {habits.map((h,i)=>{
+                const sel = obHabits.find(x=>x.name===h.name)
+                return (
+                  <div key={i} onClick={()=>{ if(sel) setObHabits(obHabits.filter(x=>x.name!==h.name)); else setObHabits([...obHabits,h]) }}
+                    style={{display:'flex',alignItems:'center',gap:'0.8rem',padding:'0.85rem 1rem',background:sel?'#FFF5EA':'white',border:`1.5px solid ${sel?O:'rgba(28,16,8,0.08)'}`,borderRadius:'1rem',cursor:'pointer',marginBottom:'0.6rem'}}>
+                    <div style={{width:'36px',height:'36px',borderRadius:'50%',background:sel?O:'#FFE8D0',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'1.1rem',flexShrink:0}}>{h.icon}</div>
+                    <div style={{flex:1}}>
+                      <div style={{fontWeight:600,fontSize:'0.88rem',color:'#1C1008'}}>{h.name}</div>
+                    </div>
+                    <div style={{width:'20px',height:'20px',borderRadius:'50%',border:`2px solid ${sel?O:'rgba(28,16,8,0.15)'}`,background:sel?O:'transparent',display:'flex',alignItems:'center',justifyContent:'center',color:'white',fontSize:'0.7rem',flexShrink:0}}>{sel?'✓':''}</div>
+                  </div>
+                )
+              })}
+              <div style={{marginTop:'0.5rem',marginBottom:'0.8rem',display:'flex',gap:'0.5rem'}}>
+                <input className="inp" id="custom-habit-inp" placeholder="Add your own habit..." style={{marginBottom:0,flex:1}}/>
+                <button onClick={()=>{ const inp=document.getElementById('custom-habit-inp'); if(inp.value.trim()){setObHabits([...obHabits,{name:inp.value.trim(),icon:'⭐'}]);inp.value=''} }} style={{padding:'0 1rem',borderRadius:'0.8rem',border:'none',background:O,color:'white',fontWeight:600,cursor:'pointer',flexShrink:0}}>+ Add</button>
+              </div>
+              <button className="btn-p" onClick={()=>{
+                const finalHabits = obHabits.length > 0 ? obHabits : habits.slice(0,5)
+                const newS = { name:obName, alias:obName, identity:obIdentity, goal:obGoal||'Build the best version of myself', startDay:parseInt(obDay)||1, habits:finalHabits, log:{[dk()]:finalHabits.map(()=>false)} }
+                update(newS); setPage('today')
+              }}>Start My Streak →</button>
+              <div style={{display:'flex',justifyContent:'center',gap:'0.4rem',marginTop:'1.2rem'}}>
+                {[1,2,3,4].map(n=><div key={n} style={{width:n===4?'18px':'6px',height:'6px',borderRadius:'3px',background:O}}></div>)}
+              </div>
+            </div>
+          )}
+
+        </div>
+      </>
+    )
+  }
+
+  // ── TODAY ──
+  if (!S) return null
+  const log = S.log?.[dk()] || []
+  const done = log.filter(Boolean).length
+  const total = S.habits.length
+  const streak = getStreak()
+  const dn = getDN()
+  const allDone = done === total && total > 0
+  const id = IDENTITIES[S.identity] || IDENTITIES.athlete
+
+  if (showShare) return (
+    <>
+      <style>{CSS}</style>
+      <div style={{minHeight:'100vh',background:'#FFF8F2'}}>
+        <div style={{background:'linear-gradient(145deg,#1a0800,#2d1000)',padding:'2rem 1.5rem',minHeight:'320px'}}>
+          <div style={{maxWidth:'560px',margin:'0 auto'}}>
+            <div style={{fontSize:'0.65rem',fontWeight:700,letterSpacing:'0.18em',textTransform:'uppercase',color:'rgba(255,255,255,0.4)',marginBottom:'0.6rem'}}>— OpStreak —</div>
+            <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:'3.5rem',fontWeight:700,color:'white',lineHeight:1}}>Day <span style={{color:O}}>{dn}</span></div>
+            {S.name && <div style={{fontSize:'0.85rem',color:'rgba(255,255,255,0.55)',marginTop:'0.3rem',fontStyle:'italic'}}>"{S.name}"</div>}
+            <div style={{margin:'1rem 0'}}>
+              {S.habits.map((h,i)=>(
+                <div key={i} style={{display:'flex',alignItems:'center',gap:'0.6rem',marginBottom:'0.45rem'}}>
+                  <div className="dot" style={{background:log[i]?O:'rgba(255,255,255,0.2)'}}></div>
+                  <span style={{fontSize:'0.85rem',fontWeight:500,color:log[i]?'white':'rgba(255,255,255,0.35)'}}>{h.icon} {h.name}</span>
+                  {log[i] && <span style={{marginLeft:'auto',fontSize:'0.72rem',color:O}}>✓</span>}
+                </div>
+              ))}
+            </div>
+            <div style={{borderTop:'1px solid rgba(255,255,255,0.08)',paddingTop:'0.8rem',display:'flex',justifyContent:'space-between',alignItems:'flex-end'}}>
+              <div>
+                <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:'1.1rem',fontWeight:700,color:O}}>OpStreak</div>
+                <div style={{fontSize:'0.65rem',color:'rgba(255,255,255,0.25)',fontFamily:'monospace'}}>opstreak.com</div>
+              </div>
+              <div style={{textAlign:'right'}}>
+                <div style={{fontSize:'1.1rem',color:O,fontFamily:'monospace',fontWeight:700}}>{streak}🔥</div>
+                <div style={{fontSize:'0.65rem',color:'rgba(255,255,255,0.4)'}}>day streak</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style={{padding:'1.2rem',maxWidth:'560px',margin:'0 auto'}}>
+          <button className="btn-p" onClick={()=>{
+            const text = `🔥 OpStreak — Day ${dn}${S.name?' · '+S.name:''}\n${id.icon} ${id.label} · ${done}/${total} done · ${streak} day streak 🔥\n\n${S.habits.map((h,i)=>log[i]?'✅ '+h.name:'⬜ '+h.name).join('\n')}\n\n👉 opstreak.com`
+            window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank')
+          }}>📲 Share on WhatsApp</button>
+          <button className="btn-g" onClick={()=>setShowShare(false)} style={{marginTop:'0.6rem'}}>← Back to Today</button>
+        </div>
+      </div>
+    </>
+  )
+
+  return (
+    <>
+      <style>{CSS}</style>
+      <div className="page">
+
+        {/* HEADER */}
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',paddingTop:'0.8rem',marginBottom:'1.2rem'}}>
+          <div>
+            <div style={{fontSize:'0.68rem',fontWeight:600,color:O,letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:'0.2rem'}}>{id.icon} {id.label}</div>
+            <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:'2.8rem',fontWeight:700,lineHeight:1,color:'#1C1008'}}>Day <span style={{color:O}}>{dn}</span></div>
+            <div style={{fontSize:'0.76rem',color:'#999',marginTop:'0.25rem'}}>{new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</div>
+            {S.name && <div style={{fontSize:'0.8rem',color:O,marginTop:'0.2rem',fontStyle:'italic'}}>"{S.name}"</div>}
+          </div>
+          <div style={{background:`linear-gradient(135deg,${O},#C44D00)`,borderRadius:'1rem',padding:'0.8rem 1rem',textAlign:'center',color:'white',minWidth:'72px',boxShadow:'0 4px 16px rgba(232,100,10,0.3)'}}>
+            <div style={{fontFamily:'monospace',fontSize:'1.8rem',fontWeight:700,lineHeight:1}}>{streak}</div>
+            <div style={{fontSize:'0.6rem',fontWeight:600,opacity:0.85,textTransform:'uppercase',letterSpacing:'0.06em',marginTop:'0.2rem'}}>🔥 Streak</div>
+          </div>
+        </div>
+
+        {/* PROGRESS */}
+        <div style={{marginBottom:'1rem'}}>
+          <div style={{display:'flex',justifyContent:'space-between',marginBottom:'0.4rem'}}>
+            <span style={{fontSize:'0.75rem',fontWeight:600,color:'#999'}}>Today</span>
+            <span style={{fontSize:'0.75rem',fontFamily:'monospace',color:O}}>{done}/{total}</span>
+          </div>
+          <div style={{height:'5px',background:'#FFE8D0',borderRadius:'100px',overflow:'hidden'}}>
+            <div style={{height:'100%',background:`linear-gradient(90deg,${O},#C44D00)`,borderRadius:'100px',width:`${total?done/total*100:0}%`,transition:'width 0.5s'}}></div>
+          </div>
+        </div>
+
+        {/* ALL DONE */}
+        {allDone && (
+          <div style={{background:'linear-gradient(135deg,#FFF8F2,#FFE8D0)',border:`1.5px solid ${O}`,borderRadius:'1rem',padding:'1rem',marginBottom:'1rem',textAlign:'center',cursor:'pointer'}} onClick={()=>setShowShare(true)}>
+            <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:'1.4rem',fontWeight:700,color:O}}>🎉 Perfect Day!</div>
+            <div style={{fontSize:'0.78rem',color:'#999',marginTop:'0.2rem'}}>All done — tap to share your streak!</div>
+          </div>
+        )}
+
+        {/* HABITS */}
+        {S.habits.map((h,i)=>(
+          <div key={i} className={`hi${log[i]?' done':''}`} onClick={()=>toggle(i)}>
+            <div className="hbub">{log[i]?<span style={{color:'white',fontSize:'1rem'}}>✓</span>:h.icon}</div>
+            <div style={{flex:1}}>
+              <div style={{fontWeight:600,fontSize:'0.88rem',color:'#1C1008'}}>{h.name}</div>
+              <div style={{fontSize:'0.7rem',color:'#999',fontFamily:'monospace',marginTop:'0.1rem'}}>{(()=>{const ks=Object.keys(S.log||{}).sort();let st=0;for(let j=ks.length-1;j>=0;j--){if(S.log[ks[j]]&&S.log[ks[j]][i])st++;else break};return st})()}🔥 streak</div>
+            </div>
+            {log[i] && <div style={{fontSize:'0.68rem',fontWeight:600,color:O,textTransform:'uppercase',letterSpacing:'0.05em'}}>Done ✓</div>}
+          </div>
+        ))}
+
+        {/* SHARE */}
+        <div style={{background:'white',border:'1px solid rgba(232,100,10,0.15)',borderRadius:'1rem',padding:'1rem',textAlign:'center',marginTop:'0.4rem'}}>
+          <div style={{fontSize:'0.68rem',fontWeight:600,letterSpacing:'0.1em',textTransform:'uppercase',color:'#999',marginBottom:'0.6rem'}}>Share Your Streak</div>
+          <button className="btn-p" onClick={()=>setShowShare(true)} style={{marginTop:0}}>📤 Share Streak Card</button>
+        </div>
+
+        {/* SETTINGS LINK */}
+        <div style={{textAlign:'center',marginTop:'1rem',paddingBottom:'2rem'}}>
+          <button onClick={()=>{ if(confirm('Reset and redo setup? Your data will be cleared.'))){ localStorage.clear(); window.location.reload() }}} style={{background:'none',border:'none',color:'#ccc',fontSize:'0.75rem',cursor:'pointer'}}>⚙ Reset & Redo Setup</button>
+        </div>
+
+      </div>
+    </>
+  )
+}
