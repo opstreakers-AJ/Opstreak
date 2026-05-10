@@ -200,7 +200,7 @@ useEffect(() => {
           <div style={{fontSize:'2.2rem',fontWeight:800,color:'#E8640A',marginBottom:'0.3rem'}}>OpStreak</div>
           <div style={{fontSize:'0.82rem',color:'#999',marginBottom:'2rem'}}>Build your streak. Show up every day.</div>
           <div style={{background:'white',border:'1px solid rgba(232,100,10,0.2)',borderRadius:'1.2rem',padding:'1.5rem',marginBottom:'1rem'}}>
-            <div style={{fontSize:'0.7rem',fontWeight:600,letterSpacing:'0.1em',textTransform:'uppercase',color:'#E8640A',marginBottom:'0.8rem'}}>Save your streak forever</div>
+            <div style={{fontSize:'0.7rem',fontWeight:600,letterSpacing:'0.1em',textTransform:'uppercase',color:'#E8640A',marginBottom:'0.8rem'}}>Sign in to continue</div>
             <LoginForm />
           </div>
 
