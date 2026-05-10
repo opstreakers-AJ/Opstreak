@@ -76,15 +76,26 @@ function LoginForm() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjbmdxZnlod2Z0bWN6a2V3YWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMjUyODcsImV4cCI6MjA5MzkwMTI4N30.AK-pyqgrNgxlYgCFc3T_ielYzbziXqm7TpP7PoMUIMw'
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjbmdxZnlod2Z0bWN6a2V3YWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMjUyODcsImV4cCI6MjA5MzkwMTI4N30.AK-pyqgrNgxlYgCFc3T_ielYzbziXqm7TpP7PoMUIMw',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjbmdxZnlod2Z0bWN6a2V3YWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMjUyODcsImV4cCI6MjA5MzkwMTI4N30.AK-pyqgrNgxlYgCFc3T_ielYzbziXqm7TpP7PoMUIMw'
         },
-        body: JSON.stringify({ email, create_user: true })
+        body: JSON.stringify({
+          email: email,
+          create_user: true,
+          options: { emailRedirectTo: 'https://opstreak.com' }
+        })
       })
-      if (res.ok) {   setSent(true) } else {   const err = await res.json()   alert('Error: ' + (err.message || 'Could not send email. Please try again.')) }
-    } catch(e) {}
+      const data = await res.json()
+      if (res.ok) {
+        setSent(true)
+      } else {
+        alert('Error: ' + (data.message || data.error_description || JSON.stringify(data)))
+      }
+    } catch(e) {
+      alert('Network error: ' + e.message)
+    }
     setLoading(false)
   }
-
   if (sent) return (
     <div style={{textAlign:'center',padding:'0.5rem'}}>
       <div style={{fontSize:'2rem',marginBottom:'0.5rem'}}>📧</div>
