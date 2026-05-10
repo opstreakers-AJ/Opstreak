@@ -203,13 +203,7 @@ useEffect(() => {
             <div style={{fontSize:'0.7rem',fontWeight:600,letterSpacing:'0.1em',textTransform:'uppercase',color:'#E8640A',marginBottom:'0.8rem'}}>Save your streak forever</div>
             <LoginForm />
           </div>
-          <div style={{display:'flex',alignItems:'center',gap:'0.75rem',margin:'0.5rem 0'}}>
-            <div style={{flex:1,height:'1px',background:'rgba(232,100,10,0.2)'}}></div>
-            <span style={{fontSize:'0.78rem',color:'#bbb'}}>or</span>
-            <div style={{flex:1,height:'1px',background:'rgba(232,100,10,0.2)'}}></div>
-          </div>
-          <button className="btng" onClick={() => window.location.href='/?guest=true'}>Continue as Guest →</button>
-          <div style={{fontSize:'0.72rem',color:'#bbb',marginTop:'0.4rem'}}>Data saves on this device only</div>
+
         </div>
       </div>
     </>
