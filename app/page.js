@@ -63,6 +63,44 @@ const CSS = `
   .hsel.on { border-color: #E8640A; background: #FFF5EA; }
 `
 
+function LoginForm() {
+  const [email, setEmail] = useState('')
+  const [sent, setSent] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  async function handleLogin(e) {
+    e.preventDefault()
+    setLoading(true)
+    try {
+      const res = await fetch('https://hcngqfyhwftmczkewalf.supabase.co/auth/v1/otp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjbmdxZnlod2Z0bWN6a2V3YWxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMjUyODcsImV4cCI6MjA5MzkwMTI4N30.AK-pyqgrNgxlYgCFc3T_ielYzbziXqm7TpP7PoMUIMw'
+        },
+        body: JSON.stringify({ email, create_user: true })
+      })
+      if (res.ok) setSent(true)
+    } catch(e) {}
+    setLoading(false)
+  }
+
+  if (sent) return (
+    <div style={{textAlign:'center',padding:'0.5rem'}}>
+      <div style={{fontSize:'2rem',marginBottom:'0.5rem'}}>📧</div>
+      <div style={{fontWeight:700,color:'#E8640A',marginBottom:'0.3rem'}}>Check your email!</div>
+      <div style={{fontSize:'0.82rem',color:'#999'}}>Click the magic link in your email to open your streak page. No password needed.</div>
+    </div>
+  )
+
+  return (
+    <form onSubmit={handleLogin}>
+      <input className="inp" type="email" placeholder="Enter your email..." value={email} onChange={e => setEmail(e.target.value)} required style={{marginBottom:'0.5rem'}} />
+      <button className="btnp" type="submit" disabled={loading} style={{marginTop:0}}>{loading ? 'Sending...' : '✉️ Send Magic Link'}</button>
+      <div style={{fontSize:'0.72rem',color:'#aaa',marginTop:'0.6rem'}}>No password. Works on any device.</div>
+    </form>
+  )
+}
 export default function App() {
   const [page, setPage] = useState('loading')
   const [S, setS] = useState(null)
@@ -154,6 +192,28 @@ useEffect(() => {
     window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank')
   }
 
+  if (page === 'login') return (
+    <>
+      <style>{CSS}</style>
+      <div style={{display:'flex',alignItems:'center',justifyContent:'center',minHeight:'100vh',background:'#FFF8F2',padding:'1.5rem'}}>
+        <div style={{width:'100%',maxWidth:'380px',textAlign:'center'}}>
+          <div style={{fontSize:'2.2rem',fontWeight:800,color:'#E8640A',marginBottom:'0.3rem'}}>OpStreak</div>
+          <div style={{fontSize:'0.82rem',color:'#999',marginBottom:'2rem'}}>Build your streak. Show up every day.</div>
+          <div style={{background:'white',border:'1px solid rgba(232,100,10,0.2)',borderRadius:'1.2rem',padding:'1.5rem',marginBottom:'1rem'}}>
+            <div style={{fontSize:'0.7rem',fontWeight:600,letterSpacing:'0.1em',textTransform:'uppercase',color:'#E8640A',marginBottom:'0.8rem'}}>Save your streak forever</div>
+            <LoginForm />
+          </div>
+          <div style={{display:'flex',alignItems:'center',gap:'0.75rem',margin:'0.5rem 0'}}>
+            <div style={{flex:1,height:'1px',background:'rgba(232,100,10,0.2)'}}></div>
+            <span style={{fontSize:'0.78rem',color:'#bbb'}}>or</span>
+            <div style={{flex:1,height:'1px',background:'rgba(232,100,10,0.2)'}}></div>
+          </div>
+          <button className="btng" onClick={() => window.location.href='/?guest=true'}>Continue as Guest →</button>
+          <div style={{fontSize:'0.72rem',color:'#bbb',marginTop:'0.4rem'}}>Data saves on this device only</div>
+        </div>
+      </div>
+    </>
+  )
   if (page === 'loading') return (
     <>
       <style>{CSS}</style>
