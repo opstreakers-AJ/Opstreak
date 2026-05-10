@@ -75,15 +75,19 @@ export default function App() {
   const [customHabit, setCustomHabit] = useState('')
   const [showShare, setShowShare] = useState(false)
 
-  useEffect(() => {
+useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const guest = params.get('guest')
     const saved = load()
     if (saved && saved.habits && saved.habits.length > 0) {
       if (!saved.log) saved.log = {}
       if (!saved.log[dk()]) saved.log[dk()] = saved.habits.map(() => false)
       setS(saved)
       setPage('today')
-    } else {
+    } else if (guest) {
       setPage('onboard')
+    } else {
+      setPage('login')
     }
   }, [])
 
