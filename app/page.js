@@ -80,7 +80,7 @@ function LoginForm() {
         },
         body: JSON.stringify({ email, create_user: true })
       })
-      if (res.ok) setSent(true)
+      if (res.ok) {   setSent(true) } else {   const err = await res.json()   alert('Error: ' + (err.message || 'Could not send email. Please try again.')) }
     } catch(e) {}
     setLoading(false)
   }
